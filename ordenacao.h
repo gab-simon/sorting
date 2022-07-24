@@ -1,11 +1,12 @@
 #ifndef ORDENACAO_H_
 #define ORDENACAO_H_
 
-#define MAX_CHAR_NOME 50
+#define MAX_CHAR_NOME 200
 
 void getNome(char nome[]);
 
 unsigned int getGRR();
+unsigned int getGRR1();
 
 void preencherAleatorio(int vetor[], int numPos, int maxVal);
 void imprimirVetor(int vetor[], int tamVetor);
@@ -16,25 +17,28 @@ int trocaBus(int vetor[], int x, int a, int b, int* numComparacoes);
 int buscaSequencial(int vetor[], int tam, int valor, int* numComparacoes);
 
 int buscaBinaria(int vetor[], int tam, int valor, int* numComparacoes);
-int buscaBinaria2(int vetor[], int a, int b, int x, int* numComparacoes);
+int buscaBinariaWow(int vetor[], int a, int b, int x, int* numComparacoes);
 
-int* insertion(int vetor[], int a, int b, int* numComparacoes);
-int insertion2(int vetor[], int a, int b, int* numComparacoes);
+int insertion(int vetor[], int a, int b, int* numComparacoes);
+int insertionSortWow(int vetor[], int a, int b, int* numComparacoes);
 int insertionSort(int vetor[], int tam);
 
-int buscaM(int vetor[], int a, int b, int indiceM, int comparado, int* numComparacoes);
-int selection2(int vetor[], int a, int b, int* numComparacoes);
+int buscaMenorIndice(int vetor[], int a, int b, int indiceM, int comparado, int* numComparacoes);
+int selectionSortWow(int vetor[], int a, int b, int* numComparacoes);
 int selectionSort(int vetor[], int tam);
 
 void copiar(int vetor[], int u[], int a, int b);
 int merge(int vetor[], int u[], int a, int m, int b, int* numComparacoes);
-int mergeSort2(int vetor[], int u[], int a, int b, int* numComparacoes);
+int mergeSortWow(int vetor[], int u[], int a, int b, int* numComparacoes);
 int mergeSort(int vetor[], int tam);
 
 int particionar(int vetor[], int a, int b, int* numComparacoes);
-int quickSort2(int vetor[], int a, int b, int* numComparacoes);
+int quickSortWow(int vetor[], int a, int b, int* numComparacoes);
 int quickSort(int vetor[], int tam);
 
-double AnaliseQuickSort(int vetor[], int tam, int *numComparacoes);
+void AnaliseInsertionSort(int vetor[], int tam, int numComparacoes);
+void AnaliseSelectionSort(int vetor[], int tam, int numComparacoes);
+void AnaliseMergeSort(int vetor[], int tam, int numComparacoes);
+void AnaliseQuickSort(int vetor[], int tam, int numComparacoes);
 
 #endif // ORDENACAO_H_

@@ -6,31 +6,45 @@
 #include <time.h>
 #include <string.h>
 
-void getNome(char nome[]){
-	strncpy(nome, "Gabriel Simon Batista Ribeiro", MAX_CHAR_NOME);
-	nome[MAX_CHAR_NOME-1] = '\0';
+void getNome(char nome[])
+{
+	strncpy(nome, "Gabriel Simon Batista Ribeiro\nBruno Fuchs Santos da Silva", MAX_CHAR_NOME);
+	nome[MAX_CHAR_NOME - 1] = '\0';
 }
 
-unsigned int getGRR(){
+unsigned int getGRR()
+{
 	return 20210575;
 }
 
-unsigned int getGRR();
-
-void preencherAleatorio(int vetor[], int numPos, int maxVal){
-	for(int i = 0; i < numPos; i++)
-		vetor[i] = rand()%maxVal;
+unsigned int getGRR1()
+{
+	return 20211775;
 }
 
-void imprimirVetor(int vetor[], int tamVetor){
+unsigned int getGRR();
+unsigned int getGRR1();
+
+// Utilitarios
+
+void preencherAleatorio(int vetor[], int numPos, int maxVal)
+{
+	for (int i = 0; i < numPos; i++)
+		vetor[i] = rand() % maxVal;
+}
+
+void imprimirVetor(int vetor[], int tamVetor)
+{
 	printf("[");
-	for(int i=0; i < tamVetor; i++){
+	for (int i = 0; i < tamVetor; i++)
+	{
 		printf(" %d ", vetor[i]);
 	}
 	printf("]\n");
 }
 
-int troca(int vetor[], int a, int b) {
+int troca(int vetor[], int a, int b)
+{
 	int x;
 
 	x = vetor[a];
@@ -40,29 +54,49 @@ int troca(int vetor[], int a, int b) {
 	return x;
 }
 
-void trocaSub(int vetor[], int a, int b) {
+int trocaBus(int vetor[], int x, int a, int b, int *numComparacoes)
+{
+	if (b < a)
+		return b;
+
+	*numComparacoes += 1;
+
+	if (x >= vetor[b])
+		return b;
+
+	return trocaBus(vetor, x, a, b - 1, numComparacoes);
+}
+
+void trocaSub(int vetor[], int a, int b)
+{
 	int aux = vetor[a];
-	
+
 	vetor[a] = vetor[b];
 	vetor[b] = aux;
 }
 
-int buscaSequencial(int vetor[], int tam, int valor, int* numComparacoes){
+// BuscaSequencial
+
+int buscaSequencial(int vetor[], int tam, int valor, int *numComparacoes)
+{
 	if (0 > tam)
 		return -1;
 
 	numComparacoes += 1;
 	if (vetor[tam] == valor)
 		return tam;
-	
-	return buscaSequencial(vetor, tam-1, valor, numComparacoes);
+
+	return buscaSequencial(vetor, tam - 1, valor, numComparacoes);
 }
 
-int buscaBinaria2(int vetor[], int a, int b, int x,  int* numComparacoes){
+// BuscaBinaria
+
+int buscaBinariaWow(int vetor[], int a, int b, int x, int *numComparacoes)
+{
 	if (a > b)
 		return -1;
 
-	int meio = floor((a + b)/2);
+	int meio = floor((a + b) / 2);
 
 	(*numComparacoes)++;
 
@@ -70,120 +104,132 @@ int buscaBinaria2(int vetor[], int a, int b, int x,  int* numComparacoes){
 		return meio;
 
 	if (x < vetor[meio])
-		return buscaBinaria2(vetor, a, meio-1, x, numComparacoes);
+		return buscaBinariaWow(vetor, a, meio - 1, x, numComparacoes);
 
-	return buscaBinaria2(vetor, meio+1, b, x, numComparacoes);
+	return buscaBinariaWow(vetor, meio + 1, b, x, numComparacoes);
 }
 
-int buscaBinaria(int vetor[], int tam, int valor, int* numComparacoes) {
-	*numComparacoes = 0;
-	return buscaBinaria2(vetor, 0, tam-1, valor, numComparacoes);
-}
-
-int trocaBus(int vetor[], int x, int a, int b, int* numComparacoes) {
-	if(b < a) 
-		return b;
+int buscaBinaria(int vetor[], int tam, int valor, int *numComparacoes)
+{
+	if (0 > tam)
+		return -1;
 
 	*numComparacoes += 1;
-	
-	if(x >= vetor[b]) 
-		return b;
 
-	return trocaBus(vetor, x, a, b-1, numComparacoes);
+	return buscaBinariaWow(vetor, 0, tam - 1, valor, numComparacoes);
 }
 
-int* insertion(int vetor[], int a, int b, int* numComparacoes) {
+// InsertionSort
+
+int insertion(int vetor[], int a, int b, int *numComparacoes)
+{
 	int i = b;
 
-	int m = trocaBus(vetor, vetor[b], a, b-1, numComparacoes);
-	
-	while(i > m + 1) {
-		troca(vetor, i, i-1);
+	int m = trocaBus(vetor, vetor[b], a, b - 1, numComparacoes);
+
+	while (i > m + 1)
+	{
+		troca(vetor, i, i - 1);
 		i--;
 	}
-	return vetor;
+	return *vetor;
 }
 
-int insertion2(int vetor[], int a, int b, int* numComparacoes) {
-	if(a >= b)
-		return -1;	
-	
-	insertion2(vetor, a, b-1, numComparacoes);
+int insertionSortWow(int vetor[], int a, int b, int *numComparacoes)
+{
+	if (a >= b)
+		return -1;
+
+	insertionSortWow(vetor, a, b - 1, numComparacoes);
 	insertion(vetor, a, b, numComparacoes);
-	
+
 	return *numComparacoes;
 }
 
-int insertionSort(int vetor[], int tam){	
+int insertionSort(int vetor[], int tam)
+{
 	int numComparacoes = 0;
-	return insertion2(vetor, 0, tam-1, &numComparacoes);
+	return insertionSortWow(vetor, 0, tam - 1, &numComparacoes);
 }
 
-int buscaM(int vetor[], int a, int b, int indiceM, int comparado, int* numComparacoes) {
-	if(a >= b) 
+// SelectionSort
+
+int buscaMenorIndice(int vetor[], int a, int b, int indiceM, int comparado, int *numComparacoes)
+{
+	if (a >= b)
 		return indiceM;
-	
+
 	*numComparacoes += 1;
-	
-	if(vetor[indiceM] >= vetor[a]) 
+
+	if (vetor[indiceM] >= vetor[a])
 		indiceM = a;
 
-
-	return buscaM(vetor, a+1, b, indiceM, comparado, numComparacoes);
+	return buscaMenorIndice(vetor, a + 1, b, indiceM, comparado, numComparacoes);
 }
 
-int selection2(int vetor[], int a, int b, int* numComparacoes) {
-	if(a == b)
+int selectionSortWow(int vetor[], int a, int b, int *numComparacoes)
+{
+	if (a == b)
 		return *numComparacoes;
-	
-	int indiceM = a;
-	
-	indiceM = buscaM(vetor, indiceM+1, b, indiceM, indiceM, numComparacoes);	
-	trocaSub(vetor, indiceM, a);
 
-	selection2(vetor, a+1, b, numComparacoes);
-	
-	return *numComparacoes;	
+	int indiceMenor = a;
+
+	indiceMenor = buscaMenorIndice(vetor, indiceMenor + 1, b, indiceMenor, indiceMenor, numComparacoes);
+	trocaSub(vetor, indiceMenor, a);
+
+	selectionSortWow(vetor, a + 1, b, numComparacoes);
+
+	return *numComparacoes;
 }
 
-int selectionSort(int vetor[], int tam){
+int selectionSort(int vetor[], int tam)
+{
 	int numComparacoes = 0;
 	int m = 0;
-	return selection2(vetor, m, tam, &numComparacoes);
+	return selectionSortWow(vetor, m, tam, &numComparacoes);
 }
 
-void copiar(int vetor[], int u[], int a, int b){
-    int i = a;
-    int j = 0;
+// MergeSort
 
-	if(a >= b)
+void copiar(int vetor[], int u[], int a, int b)
+{
+	int i = a;
+	int j = 0;
+
+	if (a >= b)
 		return;
 
-    while(i <= b) {
-        vetor[i] = u[j];
-        i++;
-        j++;
-    }
+	while (i <= b)
+	{
+		vetor[i] = u[j];
+		i++;
+		j++;
+	}
 }
 
-int merge(int vetor[], int u[], int a, int m, int b, int* numComparacoes){
+int merge(int vetor[], int u[], int a, int m, int b, int *numComparacoes)
+{
 	int k = 0;
 	int i, j, p;
 
-	if (a >= b){
+	if (a >= b)
+	{
 		return -1;
 	}
 
 	i = a;
 	j = m + 1;
 
-	while (k < b-a+1){
+	while (k < b - a + 1)
+	{
 		(*numComparacoes)++;
-		if (j > b || (i <= m && vetor[i] <= vetor[j])){
+		if (j > b || (i <= m && vetor[i] <= vetor[j]))
+		{
 			p = i;
 			i = i + 1;
 		}
-		else{
+		else
+		{
 			p = j;
 			j = j + 1;
 		}
@@ -195,25 +241,27 @@ int merge(int vetor[], int u[], int a, int m, int b, int* numComparacoes){
 	return *numComparacoes;
 }
 
-int mergeSort2(int vetor[], int u[], int a, int b, int* numComparacoes){
+int mergeSortWow(int vetor[], int u[], int a, int b, int *numComparacoes)
+{
 	if (a >= b)
 		return -1;
 
-	int m = (a+b)/2;
+	int m = (a + b) / 2;
 
-	mergeSort2(vetor, u, a, m, numComparacoes);
-	mergeSort2(vetor, u, m+1, b, numComparacoes);
+	mergeSortWow(vetor, u, a, m, numComparacoes);
+	mergeSortWow(vetor, u, m + 1, b, numComparacoes);
 
 	merge(vetor, u, a, m, b, numComparacoes);
 	return *numComparacoes;
 }
 
-int mergeSort(int vetor[], int tam){
+int mergeSort(int vetor[], int tam)
+{
 	int numComparacoes = 0;
-	int* u;
+	int *u;
 	u = malloc(tam * sizeof(int));
 
-	numComparacoes = mergeSort2(vetor, u, 0, tam-1, &numComparacoes);
+	numComparacoes = mergeSortWow(vetor, u, 0, tam - 1, &numComparacoes);
 
 	free(u);
 	u = NULL;
@@ -221,12 +269,17 @@ int mergeSort(int vetor[], int tam){
 	return numComparacoes;
 }
 
-int particionar(int vetor[], int a, int b, int *numComparacoes){
-	int x = vetor[b]; //pivo
+// QuickSort
+
+int particionar(int vetor[], int a, int b, int *numComparacoes)
+{
+	int x = vetor[b]; // pivo
 	int m = a;
-	for (int i = a; i < b; i++){
+	for (int i = a; i < b; i++)
+	{
 		*numComparacoes += 1;
-		if (vetor[i] <= x){
+		if (vetor[i] <= x)
+		{
 			trocaSub(vetor, m, i);
 			m += 1;
 		}
@@ -235,41 +288,110 @@ int particionar(int vetor[], int a, int b, int *numComparacoes){
 	return m;
 }
 
-int quickSort2(int vetor[], int a, int b, int* numComparacoes){
+int quickSortWow(int vetor[], int a, int b, int *numComparacoes)
+{
 	if (a >= b)
 		return 1;
 
 	int m = particionar(vetor, a, b, numComparacoes);
-	quickSort2(vetor, a, m-1, numComparacoes);
-	quickSort2(vetor, m+1, b, numComparacoes);
+	quickSortWow(vetor, a, m - 1, numComparacoes);
+	quickSortWow(vetor, m + 1, b, numComparacoes);
 
 	return *numComparacoes;
 }
 
-int quickSort(int vetor[], int tam){
+int quickSort(int vetor[], int tam)
+{
 	int numComparacoes = 0;
-	return quickSort2(vetor, 0, tam-1, &numComparacoes);
+	return quickSortWow(vetor, 0, tam - 1, &numComparacoes);
 }
 
-/*
-Parou de funcionar (não funcionou com todos os Sorts), mas era o esqueleto de teste (ass. Gabriel Simon)
+// Testes exaustivos de ordenação
 
-double AnaliseQuickSort(int vetor[], int tam, int *numComparacoes){
-    double analise = 0;
-    clock_t start, end;
-    
-    for(int i = 0; i < 15; i++){
-        preencherAleatorio(vetor, tam, 40);
-        start = clock();
-        numComparacoes += quickSort(vetor, tam);
-        end = clock();
+void AnaliseInsertionSort(int vetor[], int tam, int numComparacoes)
+{
+	double analise = 0;
+	clock_t start, end;
 
-        analise = ((double)end - start)/CLOCKS_PER_SEC;
-    }
+	for (int i = 0; i < 15; i++)
+	{
+		preencherAleatorio(vetor, tam, 100);
+		start = clock();
+		numComparacoes += insertionSort(vetor, tam);
+		end = clock();
 
-    *numComparacoes = *numComparacoes / 15;
-    analise = analise / 15;
-    
-    return analise;
+		analise += ((double)end - start) / CLOCKS_PER_SEC;
+	}
+
+	numComparacoes = numComparacoes / 15;
+	analise = analise / 15;
+
+	printf("Comparações totais: %d\n", numComparacoes);
+	printf("Tempo total: %f \n", analise);
 }
-*/
+
+void AnaliseSelectionSort(int vetor[], int tam, int numComparacoes)
+{
+	double analise = 0;
+	clock_t start, end;
+
+	for (int i = 0; i < 15; i++)
+	{
+		preencherAleatorio(vetor, tam, 100);
+		start = clock();
+		numComparacoes += selectionSort(vetor, tam);
+		end = clock();
+
+		analise += ((double)end - start) / CLOCKS_PER_SEC;
+	}
+
+	numComparacoes = numComparacoes / 15;
+	analise = analise / 15;
+
+	printf("Comparações totais: %d\n", numComparacoes);
+	printf("Tempo total: %f \n", analise);
+}
+
+void AnaliseMergeSort(int vetor[], int tam, int numComparacoes)
+{
+	double analise = 0;
+	clock_t start, end;
+
+	for (int i = 0; i < 15; i++)
+	{
+		preencherAleatorio(vetor, tam, 100);
+		start = clock();
+		numComparacoes += mergeSort(vetor, tam);
+		end = clock();
+
+		analise += ((double)end - start) / CLOCKS_PER_SEC;
+	}
+
+	numComparacoes = numComparacoes / 15;
+	analise = analise / 15;
+
+	printf("Comparações totais: %d\n", numComparacoes);
+	printf("Tempo total: %f \n", analise);
+}
+
+void AnaliseQuickSort(int vetor[], int tam, int numComparacoes)
+{
+	double analise = 0;
+	clock_t start, end;
+
+	for (int i = 0; i < 15; i++)
+	{
+		preencherAleatorio(vetor, tam, 100);
+		start = clock();
+		numComparacoes += quickSort(vetor, tam);
+		end = clock();
+
+		analise += ((double)end - start) / CLOCKS_PER_SEC;
+	}
+
+	numComparacoes = numComparacoes / 100;
+	analise = analise / 15;
+
+	printf("Comparações totais: %d\n", numComparacoes);
+	printf("Tempo total: %f \n", analise);
+}
