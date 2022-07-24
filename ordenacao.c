@@ -327,7 +327,7 @@ void AnaliseInsertionSort(int vetor[], int tam, int numComparacoes)
 	analise = analise / 15;
 
 	printf("Comparações totais: %d\n", numComparacoes);
-	printf("Tempo total: %f \n", analise);
+	printf("Tempo médio: %f \n", analise);
 }
 
 void AnaliseSelectionSort(int vetor[], int tam, int numComparacoes)
@@ -349,7 +349,7 @@ void AnaliseSelectionSort(int vetor[], int tam, int numComparacoes)
 	analise = analise / 15;
 
 	printf("Comparações totais: %d\n", numComparacoes);
-	printf("Tempo total: %f \n", analise);
+	printf("Tempo médio: %f \n", analise);
 }
 
 void AnaliseMergeSort(int vetor[], int tam, int numComparacoes)
@@ -371,7 +371,7 @@ void AnaliseMergeSort(int vetor[], int tam, int numComparacoes)
 	analise = analise / 15;
 
 	printf("Comparações totais: %d\n", numComparacoes);
-	printf("Tempo total: %f \n", analise);
+	printf("Tempo médio: %f \n", analise);
 }
 
 void AnaliseQuickSort(int vetor[], int tam, int numComparacoes)
@@ -393,5 +393,5 @@ void AnaliseQuickSort(int vetor[], int tam, int numComparacoes)
 	analise = analise / 15;
 
 	printf("Comparações totais: %d\n", numComparacoes);
-	printf("Tempo total: %f \n", analise);
+	printf("Tempo médio: %f \n", analise);
 }
