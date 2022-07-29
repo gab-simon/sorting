@@ -11,6 +11,7 @@ int main()
 	srand(time(NULL));
 
 	int idxBusca;
+	int buscas;
 	int numComp = 0;
 	char nameColaborators[MAX_CHAR_NOME];
 	long int tamVetor;
@@ -81,11 +82,15 @@ int main()
 	printf("\nBuscar elemento: ");
 	scanf("%d", &idxBusca);
 
-	idxBusca = buscaBinaria(vetor, tamVetor, idxBusca, &numComp);
-	printf("buscaBinaria Índice: [%d] Número de Comparações: [%d] \n", idxBusca, numComp);
+	buscas = 0;
+	numComp = 0;
+	buscas = buscaBinaria(vetor, tamVetor, idxBusca, &numComp);
+	printf("Busca Binaria Índice: [%d] Número de Comparações: [%d] \n", buscas, numComp);
 
-	idxBusca = buscaSequencial(vetor, tamVetor, idxBusca, &numComp);
-	printf("buscaSequencial Índice: [%d] Número de Comparações: [%d] \n", idxBusca, numComp);
+	buscas = 0;
+	numComp = 0;
+	buscas = buscaSequencial(vetor, tamVetor, idxBusca, &numComp);
+	printf("Busca Sequencial Índice: [%d] Número de Comparações: [%d] \n", buscas, numComp);
 
 	free(vetor);
 	vetor = NULL;

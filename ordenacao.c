@@ -82,7 +82,8 @@ int buscaSequencial(int vetor[], int tam, int valor, int *numComparacoes)
 	if (0 > tam)
 		return -1;
 
-	numComparacoes += 1;
+	(*numComparacoes)++;
+	
 	if (vetor[tam] == valor)
 		return tam;
 
